@@ -15,6 +15,7 @@ import { Route as DocsRouteImport } from './routes/docs'
 import { Route as HomeRouteImport } from './routes/home'
 import { Route as ProductsRouteImport } from './routes/products'
 import { Route as ShareRouteImport } from './routes/share'
+import { Route as DocsSlugRouteImport } from './routes/docs/$slug'
 import { Route as TTransferIdRouteImport } from './routes/t/$transferId'
 import { Route as ToCodeRouteImport } from './routes/to/$code'
 
@@ -48,6 +49,11 @@ const ShareRoute = ShareRouteImport.update({
   path: '/share',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DocsSlugRoute = DocsSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => DocsRoute,
+} as any)
 const TTransferIdRoute = TTransferIdRouteImport.update({
   id: '/t/$transferId',
   path: '/t/$transferId',
@@ -62,20 +68,22 @@ const ToCodeRoute = ToCodeRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/docs': typeof DocsRoute
+  '/docs': typeof DocsRouteWithChildren
   '/home': typeof HomeRoute
   '/products': typeof ProductsRoute
   '/share': typeof ShareRoute
+  '/docs/$slug': typeof DocsSlugRoute
   '/t/$transferId': typeof TTransferIdRoute
   '/to/$code': typeof ToCodeRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/docs': typeof DocsRoute
+  '/docs': typeof DocsRouteWithChildren
   '/home': typeof HomeRoute
   '/products': typeof ProductsRoute
   '/share': typeof ShareRoute
+  '/docs/$slug': typeof DocsSlugRoute
   '/t/$transferId': typeof TTransferIdRoute
   '/to/$code': typeof ToCodeRoute
 }
@@ -83,10 +91,11 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/docs': typeof DocsRoute
+  '/docs': typeof DocsRouteWithChildren
   '/home': typeof HomeRoute
   '/products': typeof ProductsRoute
   '/share': typeof ShareRoute
+  '/docs/$slug': typeof DocsSlugRoute
   '/t/$transferId': typeof TTransferIdRoute
   '/to/$code': typeof ToCodeRoute
 }
@@ -99,6 +108,7 @@ export interface FileRouteTypes {
     | '/home'
     | '/products'
     | '/share'
+    | '/docs/$slug'
     | '/t/$transferId'
     | '/to/$code'
   fileRoutesByTo: FileRoutesByTo
@@ -109,6 +119,7 @@ export interface FileRouteTypes {
     | '/home'
     | '/products'
     | '/share'
+    | '/docs/$slug'
     | '/t/$transferId'
     | '/to/$code'
   id:
@@ -119,6 +130,7 @@ export interface FileRouteTypes {
     | '/home'
     | '/products'
     | '/share'
+    | '/docs/$slug'
     | '/t/$transferId'
     | '/to/$code'
   fileRoutesById: FileRoutesById
@@ -126,7 +138,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
-  DocsRoute: typeof DocsRoute
+  DocsRoute: typeof DocsRouteWithChildren
   HomeRoute: typeof HomeRoute
   ProductsRoute: typeof ProductsRoute
   ShareRoute: typeof ShareRoute
@@ -178,6 +190,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShareRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/docs/$slug': {
+      id: '/docs/$slug'
+      path: '/$slug'
+      fullPath: '/docs/$slug'
+      preLoaderRoute: typeof DocsSlugRouteImport
+      parentRoute: typeof DocsRoute
+    }
     '/t/$transferId': {
       id: '/t/$transferId'
       path: '/t/$transferId'
@@ -195,10 +214,20 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface DocsRouteChildren {
+  DocsSlugRoute: typeof DocsSlugRoute
+}
+
+const DocsRouteChildren: DocsRouteChildren = {
+  DocsSlugRoute: DocsSlugRoute,
+}
+
+const DocsRouteWithChildren = DocsRoute._addFileChildren(DocsRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
-  DocsRoute: DocsRoute,
+  DocsRoute: DocsRouteWithChildren,
   HomeRoute: HomeRoute,
   ProductsRoute: ProductsRoute,
   ShareRoute: ShareRoute,
