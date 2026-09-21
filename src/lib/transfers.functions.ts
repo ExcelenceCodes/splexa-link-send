@@ -27,7 +27,9 @@ export const createAnonymousTransfer = createServerFn({ method: "POST" })
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { beginMultipart, signPart } = await import("./r2.server");
     const transferId = crypto.randomUUID();
-    const code = String(Math.floor(crypto.getRandomValues(new Uint32Array(1))[0] % 10000)).padStart(4, "0");
+    const randomCode = crypto.getRandomValues(new Uint32Array(1))[0];
+    if (randomCode === undefined) throw new Error("Secure random generation failed");
+    const code = String(Math.floor(randomCode % 10000)).padStart(4, "0");
     const sessionToken = randomBytes(32).toString("base64url");
     const expiresAt = new Date(Date.now() + 5 * 60_000).toISOString();
     const rows = data.files.map((file) => ({ id: crypto.randomUUID(), transfer_id: transferId, object_key: `anon/${transferId}/${crypto.randomUUID()}`, original_name: file.name, mime_type: file.type || "application/octet-stream", size_bytes: file.size }));

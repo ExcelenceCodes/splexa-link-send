@@ -45,6 +45,7 @@ export function ShareWorkspace() {
       const completions = [];
       for (let fileIndex = 0; fileIndex < files.length; fileIndex += 1) {
         const file = files[fileIndex]; const plan = created.uploads[fileIndex];
+        if (!file || !plan) throw new Error("Upload manifest mismatch");
         const parts = [];
         for (const part of plan.parts) {
           const start = (part.partNumber - 1) * plan.partSize;
