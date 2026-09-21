@@ -31,7 +31,8 @@ function headerOrigin() {
   }
 }
 
-type WidgetRow = { id: string; public_widget_id: string; config: unknown; application_id: string };
+type WidgetConfig = { label?: string; hint?: string; theme?: "light" | "dark"; language?: string; acceptedTypes?: string[]; maxFiles?: number; maxBytes?: number; allowPhoneHandoff?: boolean; showCode?: boolean };
+type WidgetRow = { id: string; public_widget_id: string; config: WidgetConfig; application_id: string };
 
 async function loadWidget(id: string) {
   const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
@@ -41,7 +42,8 @@ async function loadWidget(id: string) {
     .from("applications")
     .select("id,name,developer_id,domain_status,production_domain,max_upload_bytes")
     .eq("id", (widget as WidgetRow).application_id)
-    .single();
+    .maybeSingle();
+  if (!application) throw new Error("Unknown widget");
   const { data: origins } = await supabaseAdmin.from("application_origins").select("origin,kind").eq("application_id", application.id);
   return { widget: widget as WidgetRow, application, origins: origins ?? [] };
 }
@@ -65,7 +67,7 @@ export const openWidgetSession = createServerFn({ method: "POST" })
     const payload = `${widget.public_widget_id}|${data.origin}|${issuedAt}`;
     return {
       session: `${issuedAt}.${hmac(payload)}`,
-      widget: { id: widget.public_widget_id, config: widget.config },
+      widget: { id: widget.public_widget_id, config: (widget.config ?? {}) as WidgetConfig },
       application: { name: application.name, domainStatus: application.domain_status },
       environment: match.kind === "development" ? "development" : "production",
       maxUploadBytes: Number(application.max_upload_bytes),
@@ -94,7 +96,7 @@ export const createWidgetTransfer = createServerFn({ method: "POST" })
     const evidence = headerOrigin();
     if (evidence && evidence !== data.origin) throw new Error("Embedding origin mismatch");
     const { widget, application } = await loadWidget(data.widgetId);
-    const config = (widget.config ?? {}) as { maxFiles?: number; maxBytes?: number; acceptedTypes?: string[] };
+    const config = (widget.config ?? {}) as WidgetConfig;
     const maxFiles = Math.min(config.maxFiles ?? 5, 10);
     if (data.files.length > maxFiles) throw new Error(`This widget accepts at most ${maxFiles} files`);
     const total = data.files.reduce((sum, file) => sum + file.size, 0);
