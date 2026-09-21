@@ -178,7 +178,11 @@ export const verifyProductionDomain = createServerFn({ method: "POST" })
       status: "verified",
     }, { onConflict: "domain" });
     await context.supabase.from("applications").update({ domain_status: "verified" }).eq("id", application.id);
-    await context.supabase.from("application_origins").upsert({ application_id: application.id, origin: `https://${domain}`, kind: "production_subdomain" }, { onConflict: "application_id,origin" });
+    const productionOrigin = `https://${domain}`;
+    const { data: existingOrigin } = await context.supabase.from("application_origins").select("id").eq("application_id", application.id).eq("origin", productionOrigin).maybeSingle();
+    if (!existingOrigin) {
+      await context.supabase.from("application_origins").insert({ application_id: application.id, origin: productionOrigin, kind: "production_subdomain" });
+    }
     return { verified: true, records };
   });
 
