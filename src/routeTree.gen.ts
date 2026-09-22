@@ -25,6 +25,8 @@ import { Route as VerifyEmailRouteImport } from './routes/verify-email'
 import { Route as AuthenticatedAppsRouteImport } from './routes/_authenticated/apps'
 import { Route as AuthenticatedBillingRouteImport } from './routes/_authenticated/billing'
 import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authenticated/onboarding'
+import { Route as AuthenticatedPlatformRouteImport } from './routes/_authenticated/platform'
+import { Route as AuthenticatedPlatformSettingsRouteImport } from './routes/_authenticated/platform-settings'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
 import { Route as AuthenticatedUsageRouteImport } from './routes/_authenticated/usage'
 import { Route as DocsSlugRouteImport } from './routes/docs/$slug'
@@ -111,6 +113,17 @@ const AuthenticatedOnboardingRoute = AuthenticatedOnboardingRouteImport.update({
   path: '/onboarding',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedPlatformRoute = AuthenticatedPlatformRouteImport.update({
+  id: '/platform',
+  path: '/platform',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedPlatformSettingsRoute =
+  AuthenticatedPlatformSettingsRouteImport.update({
+    id: '/platform-settings',
+    path: '/platform-settings',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
@@ -159,6 +172,8 @@ export interface FileRoutesByFullPath {
   '/apps': typeof AuthenticatedAppsRoute
   '/billing': typeof AuthenticatedBillingRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
+  '/platform': typeof AuthenticatedPlatformRoute
+  '/platform-settings': typeof AuthenticatedPlatformSettingsRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/usage': typeof AuthenticatedUsageRoute
   '/docs/$slug': typeof DocsSlugRoute
@@ -182,6 +197,8 @@ export interface FileRoutesByTo {
   '/apps': typeof AuthenticatedAppsRoute
   '/billing': typeof AuthenticatedBillingRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
+  '/platform': typeof AuthenticatedPlatformRoute
+  '/platform-settings': typeof AuthenticatedPlatformSettingsRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/usage': typeof AuthenticatedUsageRoute
   '/docs/$slug': typeof DocsSlugRoute
@@ -207,6 +224,8 @@ export interface FileRoutesById {
   '/_authenticated/apps': typeof AuthenticatedAppsRoute
   '/_authenticated/billing': typeof AuthenticatedBillingRoute
   '/_authenticated/onboarding': typeof AuthenticatedOnboardingRoute
+  '/_authenticated/platform': typeof AuthenticatedPlatformRoute
+  '/_authenticated/platform-settings': typeof AuthenticatedPlatformSettingsRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
   '/_authenticated/usage': typeof AuthenticatedUsageRoute
   '/docs/$slug': typeof DocsSlugRoute
@@ -232,6 +251,8 @@ export interface FileRouteTypes {
     | '/apps'
     | '/billing'
     | '/onboarding'
+    | '/platform'
+    | '/platform-settings'
     | '/settings'
     | '/usage'
     | '/docs/$slug'
@@ -255,6 +276,8 @@ export interface FileRouteTypes {
     | '/apps'
     | '/billing'
     | '/onboarding'
+    | '/platform'
+    | '/platform-settings'
     | '/settings'
     | '/usage'
     | '/docs/$slug'
@@ -279,6 +302,8 @@ export interface FileRouteTypes {
     | '/_authenticated/apps'
     | '/_authenticated/billing'
     | '/_authenticated/onboarding'
+    | '/_authenticated/platform'
+    | '/_authenticated/platform-settings'
     | '/_authenticated/settings'
     | '/_authenticated/usage'
     | '/docs/$slug'
@@ -419,6 +444,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedOnboardingRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/platform': {
+      id: '/_authenticated/platform'
+      path: '/platform'
+      fullPath: '/platform'
+      preLoaderRoute: typeof AuthenticatedPlatformRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/platform-settings': {
+      id: '/_authenticated/platform-settings'
+      path: '/platform-settings'
+      fullPath: '/platform-settings'
+      preLoaderRoute: typeof AuthenticatedPlatformSettingsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/settings': {
       id: '/_authenticated/settings'
       path: '/settings'
@@ -468,6 +507,8 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAppsRoute: typeof AuthenticatedAppsRoute
   AuthenticatedBillingRoute: typeof AuthenticatedBillingRoute
   AuthenticatedOnboardingRoute: typeof AuthenticatedOnboardingRoute
+  AuthenticatedPlatformRoute: typeof AuthenticatedPlatformRoute
+  AuthenticatedPlatformSettingsRoute: typeof AuthenticatedPlatformSettingsRoute
   AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
   AuthenticatedUsageRoute: typeof AuthenticatedUsageRoute
   AuthenticatedAppApplicationIdRoute: typeof AuthenticatedAppApplicationIdRoute
@@ -477,6 +518,8 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAppsRoute: AuthenticatedAppsRoute,
   AuthenticatedBillingRoute: AuthenticatedBillingRoute,
   AuthenticatedOnboardingRoute: AuthenticatedOnboardingRoute,
+  AuthenticatedPlatformRoute: AuthenticatedPlatformRoute,
+  AuthenticatedPlatformSettingsRoute: AuthenticatedPlatformSettingsRoute,
   AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
   AuthenticatedUsageRoute: AuthenticatedUsageRoute,
   AuthenticatedAppApplicationIdRoute: AuthenticatedAppApplicationIdRoute,
