@@ -230,6 +230,9 @@ export const widgetConfigSchema = z.object({
   maxBytes: z.number().int().min(1024).max(MAX_CAPACITY).default(2 * GIB),
   allowPhoneHandoff: z.boolean().default(true),
   showCode: z.boolean().default(true),
+  accentColor: z.string().trim().regex(/^#[0-9a-fA-F]{6}$/).default("#2F86FF"),
+  // Presentation-only CSS for the embedded modal. Security limits stay server-owned.
+  customCss: z.string().max(4000).default(""),
 });
 
 export const saveWidget = createServerFn({ method: "POST" })

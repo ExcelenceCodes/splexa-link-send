@@ -25,11 +25,15 @@ import { Route as VerifyEmailRouteImport } from './routes/verify-email'
 import { Route as AuthenticatedAppsRouteImport } from './routes/_authenticated/apps'
 import { Route as AuthenticatedBillingRouteImport } from './routes/_authenticated/billing'
 import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authenticated/onboarding'
+import { Route as AuthenticatedPlatformRouteImport } from './routes/_authenticated/platform'
+import { Route as AuthenticatedPlatformSettingsRouteImport } from './routes/_authenticated/platform-settings'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
 import { Route as AuthenticatedUsageRouteImport } from './routes/_authenticated/usage'
 import { Route as DocsSlugRouteImport } from './routes/docs/$slug'
 import { Route as TTransferIdRouteImport } from './routes/t/$transferId'
 import { Route as ToCodeRouteImport } from './routes/to/$code'
+import { Route as WidgetWidgetIdRouteImport } from './routes/widget.$widgetId'
+import { Route as AuthenticatedAppApplicationIdRouteImport } from './routes/_authenticated/app.$applicationId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -110,6 +114,17 @@ const AuthenticatedOnboardingRoute = AuthenticatedOnboardingRouteImport.update({
   path: '/onboarding',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedPlatformRoute = AuthenticatedPlatformRouteImport.update({
+  id: '/platform',
+  path: '/platform',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedPlatformSettingsRoute =
+  AuthenticatedPlatformSettingsRouteImport.update({
+    id: '/platform-settings',
+    path: '/platform-settings',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
@@ -135,6 +150,17 @@ const ToCodeRoute = ToCodeRouteImport.update({
   path: '/to/$code',
   getParentRoute: () => rootRouteImport,
 } as any)
+const WidgetWidgetIdRoute = WidgetWidgetIdRouteImport.update({
+  id: '/widget/$widgetId',
+  path: '/widget/$widgetId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedAppApplicationIdRoute =
+  AuthenticatedAppApplicationIdRouteImport.update({
+    id: '/app/$applicationId',
+    path: '/app/$applicationId',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -152,11 +178,15 @@ export interface FileRoutesByFullPath {
   '/apps': typeof AuthenticatedAppsRoute
   '/billing': typeof AuthenticatedBillingRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
+  '/platform': typeof AuthenticatedPlatformRoute
+  '/platform-settings': typeof AuthenticatedPlatformSettingsRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/usage': typeof AuthenticatedUsageRoute
   '/docs/$slug': typeof DocsSlugRoute
   '/t/$transferId': typeof TTransferIdRoute
   '/to/$code': typeof ToCodeRoute
+  '/widget/$widgetId': typeof WidgetWidgetIdRoute
+  '/app/$applicationId': typeof AuthenticatedAppApplicationIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -174,11 +204,15 @@ export interface FileRoutesByTo {
   '/apps': typeof AuthenticatedAppsRoute
   '/billing': typeof AuthenticatedBillingRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
+  '/platform': typeof AuthenticatedPlatformRoute
+  '/platform-settings': typeof AuthenticatedPlatformSettingsRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/usage': typeof AuthenticatedUsageRoute
   '/docs/$slug': typeof DocsSlugRoute
   '/t/$transferId': typeof TTransferIdRoute
   '/to/$code': typeof ToCodeRoute
+  '/widget/$widgetId': typeof WidgetWidgetIdRoute
+  '/app/$applicationId': typeof AuthenticatedAppApplicationIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -198,11 +232,15 @@ export interface FileRoutesById {
   '/_authenticated/apps': typeof AuthenticatedAppsRoute
   '/_authenticated/billing': typeof AuthenticatedBillingRoute
   '/_authenticated/onboarding': typeof AuthenticatedOnboardingRoute
+  '/_authenticated/platform': typeof AuthenticatedPlatformRoute
+  '/_authenticated/platform-settings': typeof AuthenticatedPlatformSettingsRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
   '/_authenticated/usage': typeof AuthenticatedUsageRoute
   '/docs/$slug': typeof DocsSlugRoute
   '/t/$transferId': typeof TTransferIdRoute
   '/to/$code': typeof ToCodeRoute
+  '/widget/$widgetId': typeof WidgetWidgetIdRoute
+  '/_authenticated/app/$applicationId': typeof AuthenticatedAppApplicationIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -222,11 +260,15 @@ export interface FileRouteTypes {
     | '/apps'
     | '/billing'
     | '/onboarding'
+    | '/platform'
+    | '/platform-settings'
     | '/settings'
     | '/usage'
     | '/docs/$slug'
     | '/t/$transferId'
     | '/to/$code'
+    | '/widget/$widgetId'
+    | '/app/$applicationId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -244,11 +286,15 @@ export interface FileRouteTypes {
     | '/apps'
     | '/billing'
     | '/onboarding'
+    | '/platform'
+    | '/platform-settings'
     | '/settings'
     | '/usage'
     | '/docs/$slug'
     | '/t/$transferId'
     | '/to/$code'
+    | '/widget/$widgetId'
+    | '/app/$applicationId'
   id:
     | '__root__'
     | '/'
@@ -267,11 +313,15 @@ export interface FileRouteTypes {
     | '/_authenticated/apps'
     | '/_authenticated/billing'
     | '/_authenticated/onboarding'
+    | '/_authenticated/platform'
+    | '/_authenticated/platform-settings'
     | '/_authenticated/settings'
     | '/_authenticated/usage'
     | '/docs/$slug'
     | '/t/$transferId'
     | '/to/$code'
+    | '/widget/$widgetId'
+    | '/_authenticated/app/$applicationId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -290,6 +340,7 @@ export interface RootRouteChildren {
   VerifyEmailRoute: typeof VerifyEmailRoute
   TTransferIdRoute: typeof TTransferIdRoute
   ToCodeRoute: typeof ToCodeRoute
+  WidgetWidgetIdRoute: typeof WidgetWidgetIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -406,6 +457,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedOnboardingRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/platform': {
+      id: '/_authenticated/platform'
+      path: '/platform'
+      fullPath: '/platform'
+      preLoaderRoute: typeof AuthenticatedPlatformRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/platform-settings': {
+      id: '/_authenticated/platform-settings'
+      path: '/platform-settings'
+      fullPath: '/platform-settings'
+      preLoaderRoute: typeof AuthenticatedPlatformSettingsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/settings': {
       id: '/_authenticated/settings'
       path: '/settings'
@@ -441,6 +506,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToCodeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/widget/$widgetId': {
+      id: '/widget/$widgetId'
+      path: '/widget/$widgetId'
+      fullPath: '/widget/$widgetId'
+      preLoaderRoute: typeof WidgetWidgetIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/app/$applicationId': {
+      id: '/_authenticated/app/$applicationId'
+      path: '/app/$applicationId'
+      fullPath: '/app/$applicationId'
+      preLoaderRoute: typeof AuthenticatedAppApplicationIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
@@ -448,16 +527,22 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAppsRoute: typeof AuthenticatedAppsRoute
   AuthenticatedBillingRoute: typeof AuthenticatedBillingRoute
   AuthenticatedOnboardingRoute: typeof AuthenticatedOnboardingRoute
+  AuthenticatedPlatformRoute: typeof AuthenticatedPlatformRoute
+  AuthenticatedPlatformSettingsRoute: typeof AuthenticatedPlatformSettingsRoute
   AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
   AuthenticatedUsageRoute: typeof AuthenticatedUsageRoute
+  AuthenticatedAppApplicationIdRoute: typeof AuthenticatedAppApplicationIdRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAppsRoute: AuthenticatedAppsRoute,
   AuthenticatedBillingRoute: AuthenticatedBillingRoute,
   AuthenticatedOnboardingRoute: AuthenticatedOnboardingRoute,
+  AuthenticatedPlatformRoute: AuthenticatedPlatformRoute,
+  AuthenticatedPlatformSettingsRoute: AuthenticatedPlatformSettingsRoute,
   AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
   AuthenticatedUsageRoute: AuthenticatedUsageRoute,
+  AuthenticatedAppApplicationIdRoute: AuthenticatedAppApplicationIdRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
@@ -489,6 +574,7 @@ const rootRouteChildren: RootRouteChildren = {
   VerifyEmailRoute: VerifyEmailRoute,
   TTransferIdRoute: TTransferIdRoute,
   ToCodeRoute: ToCodeRoute,
+  WidgetWidgetIdRoute: WidgetWidgetIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

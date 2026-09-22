@@ -33,7 +33,7 @@ export function money(minorUnits: number) {
   return `${sign}$${absolute / 100n}.${String(absolute % 100n).padStart(2, "0")}`;
 }
 
-export function DevShell({ title, note, actions, children, isAdmin }: { title: string; note?: string; actions?: React.ReactNode; children: React.ReactNode; isAdmin?: boolean }) {
+export function DevShell({ title, note, actions, children, isAdmin }: { title: string; note?: string | undefined; actions?: React.ReactNode | undefined; children: React.ReactNode; isAdmin?: boolean | undefined }) {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   async function signOut() {
@@ -68,7 +68,7 @@ export function DevShell({ title, note, actions, children, isAdmin }: { title: s
   </div>;
 }
 
-export function Stat({ label, value, hint }: { label: string; value: string; hint?: string }) {
+export function Stat({ label, value, hint }: { label: string; value: string; hint?: string | undefined }) {
   return <div className="border border-border p-5">
     <p className="eyebrow">{label}</p>
     <p className="mt-3 font-display text-3xl font-bold">{value}</p>
@@ -76,7 +76,7 @@ export function Stat({ label, value, hint }: { label: string; value: string; hin
   </div>;
 }
 
-export function Panel({ title, note, children }: { title: string; note?: string; children: React.ReactNode }) {
+export function Panel({ title, note, children }: { title: string; note?: string | undefined; children: React.ReactNode }) {
   return <section className="mt-10 border border-border p-6">
     <h2 className="text-xl font-semibold">{title}</h2>
     {note && <p className="mt-1 text-sm text-muted-foreground">{note}</p>}

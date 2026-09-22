@@ -64,7 +64,7 @@ export const savePlatformSetting = createServerFn({ method: "POST" })
   .inputValidator((input) => z.object({ key: z.string().trim().min(2).max(60), value: z.string().min(2).max(4000) }).parse(input))
   .handler(async ({ data, context }) => {
     await requireAdmin(context);
-    let parsed: unknown;
+    let parsed: any;
     try { parsed = JSON.parse(data.value); } catch { throw new Error("Value must be valid JSON"); }
     const { error } = await context.supabase.from("platform_settings").upsert({ key: data.key, value: parsed });
     if (error) throw new Error(error.message);
