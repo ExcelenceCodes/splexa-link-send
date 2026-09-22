@@ -14,7 +14,7 @@ import { getMyRoles } from "@/lib/platform.functions";
 
 export const Route = createFileRoute("/_authenticated/app/$applicationId")({
   head: () => ({ meta: [{ title: "Application — Splexanode" }, { name: "robots", content: "noindex" }] }),
-  component: AppDetail;
+  component: AppDetail,
 });
 
 type WidgetConfig = {
@@ -33,14 +33,10 @@ function AppDetail() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const load = useServerFn(getApplication);
-  const roles = useQuery({ queryKey: ["roles"], queryFn: () => useRolesFn() });
   const rolesFn = useServerFn(getMyRoles);
-  function useRolesFn() { return rolesFn({}); }
+  const roles = useQuery({ queryKey: ["roles"], queryFn: () => rolesFn({}) });
   const app = useQuery({ queryKey: ["app", applicationId], queryFn: () => load({ data: { applicationId } }) });
   const refresh = () => queryClient.invalidateQueries({ queryKey: ["app", applicationId] });
-
-  const rotate = useMutation({ mutationFn: () => useServerFnCall(rotateApplicationSecret, { applicationId }) });
-  function useServerFnCall(_fn: unknown, _data: unknown): never { throw new Error("unused"); }
 
   const rotateFn = useServerFn(rotateApplicationSecret);
   const domainFn = useServerFn(setProductionDomain);
