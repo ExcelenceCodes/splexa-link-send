@@ -30,6 +30,7 @@ import { Route as AuthenticatedUsageRouteImport } from './routes/_authenticated/
 import { Route as DocsSlugRouteImport } from './routes/docs/$slug'
 import { Route as TTransferIdRouteImport } from './routes/t/$transferId'
 import { Route as ToCodeRouteImport } from './routes/to/$code'
+import { Route as AuthenticatedAppApplicationIdRouteImport } from './routes/_authenticated/app.$applicationId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -135,6 +136,12 @@ const ToCodeRoute = ToCodeRouteImport.update({
   path: '/to/$code',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAppApplicationIdRoute =
+  AuthenticatedAppApplicationIdRouteImport.update({
+    id: '/app/$applicationId',
+    path: '/app/$applicationId',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -157,6 +164,7 @@ export interface FileRoutesByFullPath {
   '/docs/$slug': typeof DocsSlugRoute
   '/t/$transferId': typeof TTransferIdRoute
   '/to/$code': typeof ToCodeRoute
+  '/app/$applicationId': typeof AuthenticatedAppApplicationIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -179,6 +187,7 @@ export interface FileRoutesByTo {
   '/docs/$slug': typeof DocsSlugRoute
   '/t/$transferId': typeof TTransferIdRoute
   '/to/$code': typeof ToCodeRoute
+  '/app/$applicationId': typeof AuthenticatedAppApplicationIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -203,6 +212,7 @@ export interface FileRoutesById {
   '/docs/$slug': typeof DocsSlugRoute
   '/t/$transferId': typeof TTransferIdRoute
   '/to/$code': typeof ToCodeRoute
+  '/_authenticated/app/$applicationId': typeof AuthenticatedAppApplicationIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -227,6 +237,7 @@ export interface FileRouteTypes {
     | '/docs/$slug'
     | '/t/$transferId'
     | '/to/$code'
+    | '/app/$applicationId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -249,6 +260,7 @@ export interface FileRouteTypes {
     | '/docs/$slug'
     | '/t/$transferId'
     | '/to/$code'
+    | '/app/$applicationId'
   id:
     | '__root__'
     | '/'
@@ -272,6 +284,7 @@ export interface FileRouteTypes {
     | '/docs/$slug'
     | '/t/$transferId'
     | '/to/$code'
+    | '/_authenticated/app/$applicationId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -441,6 +454,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToCodeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/app/$applicationId': {
+      id: '/_authenticated/app/$applicationId'
+      path: '/app/$applicationId'
+      fullPath: '/app/$applicationId'
+      preLoaderRoute: typeof AuthenticatedAppApplicationIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
@@ -450,6 +470,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedOnboardingRoute: typeof AuthenticatedOnboardingRoute
   AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
   AuthenticatedUsageRoute: typeof AuthenticatedUsageRoute
+  AuthenticatedAppApplicationIdRoute: typeof AuthenticatedAppApplicationIdRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -458,6 +479,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedOnboardingRoute: AuthenticatedOnboardingRoute,
   AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
   AuthenticatedUsageRoute: AuthenticatedUsageRoute,
+  AuthenticatedAppApplicationIdRoute: AuthenticatedAppApplicationIdRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
