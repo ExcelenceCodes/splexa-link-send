@@ -32,6 +32,7 @@ import { Route as AuthenticatedUsageRouteImport } from './routes/_authenticated/
 import { Route as DocsSlugRouteImport } from './routes/docs/$slug'
 import { Route as TTransferIdRouteImport } from './routes/t/$transferId'
 import { Route as ToCodeRouteImport } from './routes/to/$code'
+import { Route as WidgetWidgetIdRouteImport } from './routes/widget.$widgetId'
 import { Route as AuthenticatedAppApplicationIdRouteImport } from './routes/_authenticated/app.$applicationId'
 
 const IndexRoute = IndexRouteImport.update({
@@ -149,6 +150,11 @@ const ToCodeRoute = ToCodeRouteImport.update({
   path: '/to/$code',
   getParentRoute: () => rootRouteImport,
 } as any)
+const WidgetWidgetIdRoute = WidgetWidgetIdRouteImport.update({
+  id: '/widget/$widgetId',
+  path: '/widget/$widgetId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedAppApplicationIdRoute =
   AuthenticatedAppApplicationIdRouteImport.update({
     id: '/app/$applicationId',
@@ -179,6 +185,7 @@ export interface FileRoutesByFullPath {
   '/docs/$slug': typeof DocsSlugRoute
   '/t/$transferId': typeof TTransferIdRoute
   '/to/$code': typeof ToCodeRoute
+  '/widget/$widgetId': typeof WidgetWidgetIdRoute
   '/app/$applicationId': typeof AuthenticatedAppApplicationIdRoute
 }
 export interface FileRoutesByTo {
@@ -204,6 +211,7 @@ export interface FileRoutesByTo {
   '/docs/$slug': typeof DocsSlugRoute
   '/t/$transferId': typeof TTransferIdRoute
   '/to/$code': typeof ToCodeRoute
+  '/widget/$widgetId': typeof WidgetWidgetIdRoute
   '/app/$applicationId': typeof AuthenticatedAppApplicationIdRoute
 }
 export interface FileRoutesById {
@@ -231,6 +239,7 @@ export interface FileRoutesById {
   '/docs/$slug': typeof DocsSlugRoute
   '/t/$transferId': typeof TTransferIdRoute
   '/to/$code': typeof ToCodeRoute
+  '/widget/$widgetId': typeof WidgetWidgetIdRoute
   '/_authenticated/app/$applicationId': typeof AuthenticatedAppApplicationIdRoute
 }
 export interface FileRouteTypes {
@@ -258,6 +267,7 @@ export interface FileRouteTypes {
     | '/docs/$slug'
     | '/t/$transferId'
     | '/to/$code'
+    | '/widget/$widgetId'
     | '/app/$applicationId'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -283,6 +293,7 @@ export interface FileRouteTypes {
     | '/docs/$slug'
     | '/t/$transferId'
     | '/to/$code'
+    | '/widget/$widgetId'
     | '/app/$applicationId'
   id:
     | '__root__'
@@ -309,6 +320,7 @@ export interface FileRouteTypes {
     | '/docs/$slug'
     | '/t/$transferId'
     | '/to/$code'
+    | '/widget/$widgetId'
     | '/_authenticated/app/$applicationId'
   fileRoutesById: FileRoutesById
 }
@@ -328,6 +340,7 @@ export interface RootRouteChildren {
   VerifyEmailRoute: typeof VerifyEmailRoute
   TTransferIdRoute: typeof TTransferIdRoute
   ToCodeRoute: typeof ToCodeRoute
+  WidgetWidgetIdRoute: typeof WidgetWidgetIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -493,6 +506,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToCodeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/widget/$widgetId': {
+      id: '/widget/$widgetId'
+      path: '/widget/$widgetId'
+      fullPath: '/widget/$widgetId'
+      preLoaderRoute: typeof WidgetWidgetIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/app/$applicationId': {
       id: '/_authenticated/app/$applicationId'
       path: '/app/$applicationId'
@@ -554,6 +574,7 @@ const rootRouteChildren: RootRouteChildren = {
   VerifyEmailRoute: VerifyEmailRoute,
   TTransferIdRoute: TTransferIdRoute,
   ToCodeRoute: ToCodeRoute,
+  WidgetWidgetIdRoute: WidgetWidgetIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
