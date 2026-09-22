@@ -11,7 +11,7 @@ export function SiteHeader() {
         <Link to="/products" activeProps={{ className: "text-primary" }}>Products</Link>
         <Link to="/docs" activeProps={{ className: "text-primary" }}>Docs</Link>
         <Link to="/about" activeProps={{ className: "text-primary" }}>About</Link>
-        <Link to="/sign-in" className="text-muted-foreground">Developer sign in</Link>
+        <Link to="/sign-in" className="text-muted-foreground">SignIn</Link>
         <Button asChild size="sm"><Link to="/share">Send files</Link></Button>
       </nav>
       <Button variant="ghost" size="icon" className="md:hidden" aria-label="Open navigation"><Menu /></Button>
