@@ -5,7 +5,7 @@ import { completeWidgetTransfer, createWidgetTransfer, getWidgetTransferStatus, 
 
 export const Route = createFileRoute("/widget/$widgetId")({
   ssr: false,
-  validateSearch: (search: Record<string, unknown>) => ({ origin: String(search.origin ?? "") }),
+  validateSearch: (search: Record<string, unknown>) => ({ origin: String(search["origin"] ?? "") }),
   head: () => ({ meta: [{ title: "Splexanode upload" }, { name: "robots", content: "noindex" }] }),
   component: Widget,
 });

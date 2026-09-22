@@ -123,26 +123,3 @@ Usage accounting: 5GB allowance, byte-accurate tracking, debt calculation, lifet
 Polish: docs content, SEO, analytics, /platform (minimal), edge-case hardening (tab close, network loss, duplicate webhooks, double cleanup runs, expired-mid-upload).
 
 Do not mark a phase complete until the underlying R2/Supabase flow actually works end-to-end — no visual-only "done."  the typography and brand settings read from uploaded files, and from them make site brand and brand assets. end to end, for any clarifications just ask, as well as you are free to put place holders in .env so as I can add the missing next time
-
-This project was built with [Lovable](https://lovable.dev).
-
-**Live app**: https://splexa-link-send.lovable.app
-
-## Build with Lovable
-
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/a3de6a28-65cb-4f90-aa48-0baca7114ec6).
-
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
-
-## Development
-
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
-
-```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
-npm run dev
-```
